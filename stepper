@@ -1,0 +1,28 @@
+#include <Stepper.h>
+int stepsPerRev = 1600;
+int motSpeed = 10;
+int dt = 500;
+int current_angle = 0;
+int angle;
+Stepper myStepper(stepsPerRev, 8,10, 9, 11);
+void setup() {
+  Serial.begin(9600);
+  myStepper.setSpeed(motSpeed);
+}
+
+void loop() {
+
+  while (Serial.available() == 0){
+    
+  }
+  angle = Serial.parseInt();
+  
+  while (angle!=current_angle){
+    myStepper.step(((angle-current_angle)/360)*stepsPerRev);
+  }
+
+  current_angle = angle;
+  
+  delay(dt);
+  
+}
